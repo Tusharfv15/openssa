@@ -6,8 +6,9 @@ from loguru import logger
 # pylint: disable=wrong-import-order
 from agent import get_or_create_agent
 from openssa import OpenAILM
+from gemini_lm import SemiconductorGeminiLM
 
-TITLE: str = 'OpenSSA: Semiconductor Industry-Specific Agent leveraging SemiKong LM'
+TITLE: str = 'OpenSSA: Semiconductor Industry-Specific Agent leveraging Gemini LM'
 
 st.set_page_config(page_title=TITLE,
                    page_icon=None,
@@ -45,7 +46,7 @@ if 'semikong_agent_solutions' not in st.session_state:
     st.session_state.semikong_agent_solutions: defaultdict[str, str] = defaultdict(str)
 
 st.subheader('SEMICONDUCTOR INDUSTRY-SPECIFIC AGENT')
-st.subheader('_using `SemiKong` LM_')
+st.subheader('_using `Gemini` LM_')
 
 if st.button(label='SOLVE',
              on_click=None, args=None, kwargs=None,
@@ -56,7 +57,7 @@ if st.button(label='SOLVE',
         logger.level('DEBUG')
 
         st.session_state.semikong_agent_solutions[st.session_state.typed_problem]: str = \
-            get_or_create_agent(use_semikong_lm=False).solve(problem=st.session_state.typed_problem)
+            get_or_create_agent(use_semikong_lm=False, use_gemini_lm=True).solve(problem=st.session_state.typed_problem)
 
 
 def parse_recipe_text(text: str) -> dict[str, str]:
@@ -89,7 +90,7 @@ def parse_recipe_text(text: str) -> dict[str, str]:
 
 
 if (solution := st.session_state.semikong_agent_solutions[st.session_state.typed_problem]):
-    solution = OpenAILM.from_defaults().get_response(
+    solution = SemiconductorGeminiLM.from_defaults().get_response(
         prompt=f"""{solution} \n\n Please help me parse the above text into this format:\n
          recipe_1: Show the recipe 1 here\n
          recipe_2: Show the recipe 2 here\n

@@ -37,6 +37,12 @@ class LMConfig:
     OPENAI_DEFAULT_MODEL: str = 'gpt-4o'  # platform.openai.com/docs/models/gpt-4o
     OPENAI_DEFAULT_SMALL_MODEL: str = 'gpt-4o-mini'  # platform.openai.com/docs/models/gpt-4o-mini
 
+    # Gemini LMs
+    GEMINI_API_KEY: str | None = os.environ.get('GEMINI_API_KEY')
+    GEMINI_API_URL: str = os.environ.get('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/openai')
+    GEMINI_DEFAULT_MODEL: str = 'gemini-2.0-flash'
+    GEMINI_DEFAULT_SMALL_MODEL: str = 'gemini-1.5-flash'
+
     # LM parameters
     DEFAULT_SEED: int = 7 * 17 * 14717
     DEFAULT_TEMPERATURE: float = 0.0
